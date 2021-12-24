@@ -7,10 +7,10 @@
 <div class="box">
      
     <% for(let i = 0; i < items.length; i++){ %>
-        <div class="item">
-            <input type="checkbox">
+        <form class="item" >
+            <input type="checkbox" name="<%= items[i] %>">
             <p><%= items[i] %></p>
-        </div>
+        </form>
     <% } %>
   
     <form class="item" action="/" method="POST">
