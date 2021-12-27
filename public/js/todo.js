@@ -14,6 +14,7 @@ for (let i = 0; i < checkboxes.length; i++){
         .then(response => {
 
             if(response.status == 200){ //OK response code
+                //Have a timeout so user can see the CSS cross of first before disappearing
                 setTimeout(function(){
                     location.replace("/");
                 }, 500);
