@@ -1,15 +1,42 @@
-$("input:checkbox").change(function(){
-    console.log($(this).attr("name"));
-    
-    let POST = new XMLHttpRequest();
+// $("input:checkbox").change(function(){
+   
+//     let deleteRequest = new XMLHttpRequest();
+//     let data = {
+//         checkbox: $(this).attr("name")
+//     }
+
+//     deleteRequest.open("DELETE","/remove");
+//     deleteRequest.setRequestHeader("Content-Type", "application/json");
+//     deleteRequest.send(JSON.stringify(data));
+// });
+
+$("input:checkbox").on("input", (function(){
+
     let data = {
         checkbox: $(this).attr("name")
-    }
+    };
 
-    POST.open("POST","/remove");
-    POST.setRequestHeader("Content-Type", "application/json");
-    POST.send(JSON.stringify(data));
-});
+    $.ajax({
+        url: "/remove",
+        method: "DELETE",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data){
+            console.log("Success: " + data);
+            location.replace("/");
+        },
+        error: function(data){
+            console.log("Error: " + data);
+        }
+    });
+
+}));
+
+
+
+
+
+
 
 
 // Above code gets the name of the checkbox that was clicked
