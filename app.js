@@ -44,7 +44,7 @@ app.delete("/remove", function(req, res){
         }
     }
     
-    res.redirect(200, "/");
+    res.sendStatus(200); // 200: OK
     console.log(res.headersSent);
 });
 

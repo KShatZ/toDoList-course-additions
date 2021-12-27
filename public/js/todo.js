@@ -1,46 +1,30 @@
-// $("input:checkbox").change(function(){
-   
-//     let deleteRequest = new XMLHttpRequest();
-//     let data = {
-//         checkbox: $(this).attr("name")
-//     }
+const checkboxes = document.querySelectorAll("input[type='checkbox']");
 
-//     deleteRequest.open("DELETE","/remove");
-//     deleteRequest.setRequestHeader("Content-Type", "application/json");
-//     deleteRequest.send(JSON.stringify(data));
-// });
+for (let i = 0; i < checkboxes.length; i++){
 
-$("input:checkbox").on("input", (function(){
+    checkboxes[i].addEventListener("input", function(event){
 
-    let data = {
-        checkbox: $(this).attr("name")
-    };
+        let data = {checkbox: event.target.name};
+    
+        fetch("/remove", {
+            method: "DELETE",
+            headers: {"Content-type": "application/json"},
+            body: JSON.stringify(data)
+        })
+        .then(response => {
 
-    $.ajax({
-        url: "/remove",
-        method: "DELETE",
-        contentType: "application/json",
-        data: JSON.stringify(data),
-        success: function (data){
-            console.log("Success: " + data);
-            location.replace("/");
-        },
-        error: function(data){
-            console.log("Error: " + data);
-        }
+            if(response.status == 200){ //OK response code
+                setTimeout(function(){
+                    location.replace("/");
+                }, 500);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
     });
+}
 
-}));
-
-
-
-
-
-
-
-
-// Above code gets the name of the checkbox that was clicked
-// Send POST to express
-// Use the name to find the item in the array and remove
-// Redirect to home to remove that item
-// Have a delay so that the item is crossed off (CSS) and then removed
+// Currently the code above accomplishes removal of to-do item with help of express and a page reload
+// Will want to redo this later where the removal happens with DOM maniupulation (element.remove I beleive)
+// without page reloading.
